@@ -1,0 +1,44 @@
+---
+# OrderRefunded Event
+
+## Overview
+The `OrderRefunded` event is triggered when an order is refunded. This event ensures that all relevant services are notified of the refund, allowing for appropriate actions such as updating accounting records and notifying customers.
+
+## Schema
+```json
+{
+  "type": "object",
+  "properties": {
+    "orderId": {
+      "type": "string",
+      "description": "The ID of the order that has been refunded."
+    },
+    "amount": {
+      "type": "number",
+      "description": "The amount refunded to the customer."
+    },
+    "reason": {
+      "type": "string",
+      "description": "The reason for the refund."
+    }
+  },
+  "required": ["orderId", "amount", "reason"]
+}
+```
+
+## Examples
+```json
+{
+  "orderId": "ord-1001",
+  "amount": 25,
+  "reason": "Goodwill credit"
+}
+```
+
+## Relations
+This event is related to the following commands and services:
+- **Command**: `RefundOrder`
+- **Service**: `OrdersService`
+
+## Changelog
+- **Version 0.0.1**: Initial version.
