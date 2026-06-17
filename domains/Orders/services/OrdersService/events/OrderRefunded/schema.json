@@ -1,0 +1,24 @@
+{
+  "$id": "https://example.com/schemas/OrderRefunded.schema.json",
+  "type": "object",
+  "properties": {
+    "orderId": {
+      "type": "string",
+      "description": "The unique identifier of the order being refunded."
+    },
+    "amount": {
+      "type": "number",
+      "description": "The amount being refunded."
+    },
+    "reason": {
+      "type": "string",
+      "description": "The reason for the refund."
+    },
+    "refundedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The timestamp when the refund was processed."
+    }
+  },
+  "required": ["orderId", "amount", "reason", "refundedAt"]
+}
