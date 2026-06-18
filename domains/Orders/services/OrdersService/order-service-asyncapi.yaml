@@ -26,6 +26,9 @@ channels:
       OrderPlaced:
         summary: Order placed event
         $ref: '#/components/messages/OrderPlaced'
+      OrderRefunded:
+        summary: Order refunded event
+        $ref: '#/components/messages/OrderRefunded'
 
 operations:
   onOrderConfirmation:
@@ -42,33 +45,39 @@ operations:
     channel:
       $ref: '#/channels/orderEventsChannel'
     action: send
+  onOrderRefund:
+    summary: Action to refund an order.
+    description: Issuing a refund to a customer will trigger this event.
+    title: Order Refunded
+    channel:
+      $ref: '#/channels/orderEventsChannel'
+    action: send
 
 components:
   messages:
     OrderConfirmed:
       payload:
         $ref: '#/components/schemas/OrderConfirmed'
-
     OrderPlaced:
       payload:
         $ref: '#/components/schemas/OrderPlaced'
+    OrderRefunded:
+      payload:
+        $ref: '#/components/schemas/OrderRefunded'
 
   schemas:
     orderId:
       description: The unique identifier of an order
       type: string
       pattern: ^([A-Za-z0-9_-]{21})$
-
     userId:
       description: The unique identifier of a user
       type: string
       pattern: ^([A-Za-z0-9_-]{21})$
-
     productId:
       description: The product unique identifier
       type: string
       pattern: ^([A-Za-z0-9_-]{21})$
-
     Order:
       required:
         - orderId
@@ -95,7 +104,6 @@ components:
         quantity:
           type: integer
       title: Order
-
     EventEnvelope:
       type: object
       allOf:
@@ -113,13 +121,12 @@ components:
         causationid:
           type: string
           format: uuid
-
     EventType:
       type: string
       enum:
         - 'order.placed'
         - 'order.confirmed'
-
+        - 'order.refunded'
     OrderConfirmed:
       type: object
       additionalProperties: false
@@ -130,10 +137,8 @@ components:
           $ref: '#/components/schemas/Order'
         type:
           $ref: '#/components/schemas/EventType'
-
       required:
         - data
-
     OrderPlaced:
       type: object
       additionalProperties: false
@@ -142,6 +147,52 @@ components:
       properties:
         data:
           $ref: '#/components/schemas/Order'
+        type:
+          $ref: '#/components/schemas/EventType'
+      required:
+        - data
+    OrderRefunded:
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/EventEnvelope'
+      properties:
+        data:
+          type: object
+          required:
+            - orderId
+            - userId
+            - orderStatus
+            - totalAmount
+            - refundAmount
+            - refundReason
+            - refundedAt
+          properties:
+            orderId:
+              type: string
+              format: uuid
+              description: Unique identifier for the order.
+            userId:
+              type: string
+              format: uuid
+              description: Unique identifier for the user.
+            orderStatus:
+              type: string
+              enum: ['refunded']
+              description: The status of the order after refund.
+            totalAmount:
+              type: number
+              description: Full amount of the order before refund.
+            refundAmount:
+              type: number
+              description: Amount refunded to the customer.
+            refundReason:
+              type: string
+              description: Reason for the issued refund.
+            refundedAt:
+              type: string
+              format: date-time
+              description: Timestamp when the refund was processed.
         type:
           $ref: '#/components/schemas/EventType'
       required:

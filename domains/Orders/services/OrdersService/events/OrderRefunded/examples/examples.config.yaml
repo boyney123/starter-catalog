@@ -1,0 +1,3 @@
+- file: full-refund.json
+  title: Full order refund
+  description: Example payload for a full refund of an order.
