@@ -1,0 +1,50 @@
+---
+id: OrderShipped
+name: Order Shipped
+version: 0.0.1
+summary: |
+  Indicates an order has been shipped.
+owners:
+  - dboyne
+  - msmith
+badges:
+  - content: Newly created!
+    backgroundColor: blue
+    textColor: white
+  - content: 'Channel:Apache Kafka'
+    backgroundColor: yellow
+    textColor: yellow
+schemaPath: schema.json
+---
+
+import Footer from '@catalog/components/footer.astro';
+
+## Overview
+
+The OrderShipped event signifies that an order has been dispatched to the customer. This event ensures downstream services are notified, facilitating order tracking and delivery updates.
+
+## Payload
+
+```json title="Example payload"
+{
+  "orderId": "123e4567-e89b-12d3-a456-426614174000",
+  "shipment": {
+    "carrier": "FedEx",
+    "trackingNumber": "TRACK123456",
+    "shippedAt": "2024-07-04T14:48:00Z",
+    "estimatedDeliveryDate": "2024-07-10"
+  },
+  "items": [
+    {
+      "productId": "789e1234-b56c-78d9-e012-3456789fghij",
+      "quantity": 2
+    }
+  ]
+}
+```
+
+## Schema
+
+<Schema file="schema.json" />
+
+<Footer />

@@ -1,7 +1,7 @@
 ---
 id: OrderCancelled
 name: Order cancelled
-version: 0.0.1
+version: 0.0.2
 summary: |
   Indicates an order has been canceled
 owners:
@@ -28,8 +28,11 @@ The OrderCancelled event is triggered whenever an existing order is cancelled. T
 ```json title="Example payload"
 {
   "orderId": "123e4567-e89b-12d3-a456-426614174000",
-  "userId": "123e4567-e89b-12d3-a456-426614174000",
-  "orderItems": [
+  "customer": {
+    "customerId": "123e4567-e89b-12d3-a456-426614174000",
+    "email": "customer@example.com"
+  },
+  "cancelledItems": [
     {
       "productId": "789e1234-b56c-78d9-e012-3456789fghij",
       "productName": "Example Product",
@@ -39,9 +42,12 @@ The OrderCancelled event is triggered whenever an existing order is cancelled. T
     }
   ],
   "orderStatus": "cancelled",
-  "totalAmount": 59.98,
+  "total": {
+    "amount": 59.98,
+    "currency": "USD"
+  },
   "cancellationReason": "Customer requested cancellation",
-  "timestamp": "2024-07-04T14:48:00Z"
+  "cancelledAt": "2024-07-04T14:48:00Z"
 }
 ```
 

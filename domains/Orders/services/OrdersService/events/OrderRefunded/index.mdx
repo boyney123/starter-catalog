@@ -1,0 +1,46 @@
+---
+id: OrderRefunded
+name: Order Refunded
+version: 0.0.1
+summary: |
+  Indicates an order has been refunded.
+owners:
+  - dboyne
+  - msmith
+badges:
+  - content: Newly created!
+    backgroundColor: blue
+    textColor: white
+  - content: 'Channel:Apache Kafka'
+    backgroundColor: yellow
+    textColor: yellow
+schemaPath: schema.json
+---
+
+import Footer from '@catalog/components/footer.astro';
+
+## Overview
+
+The OrderRefunded event signifies that a refund has been issued for an order, notifying downstream services for accounting and notification purposes.
+
+## Payload
+
+```json title="Example payload"
+{
+  "orderId": "123e4567-e89b-12d3-a456-426614174000",
+  "refundId": "ref-123e4567-e89b-12d3-a456-426614174000",
+  "paymentTransactionId": "trans-001",
+  "amount": {
+    "value": 150.75,
+    "currency": "USD"
+  },
+  "reason": "Customer requested refund",
+  "refundedAt": "2024-07-04T14:48:00Z"
+}
+```
+
+## Schema
+
+<Schema file="schema.json" />
+
+<Footer />

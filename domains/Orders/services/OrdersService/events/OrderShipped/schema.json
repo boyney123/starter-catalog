@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrderShippedEvent",
+  "type": "object",
+  "properties": {
+    "orderId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The unique identifier of the shipped order."
+    },
+    "shipment": {
+      "type": "object",
+      "description": "Details about the shipment.",
+      "properties": {
+        "carrier": {
+          "type": "string",
+          "description": "The carrier handling the shipment."
+        },
+        "trackingNumber": {
+          "type": "string",
+          "description": "The tracking number provided by the carrier."
+        },
+        "shippedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the order was shipped."
+        },
+        "estimatedDeliveryDate": {
+          "type": "string",
+          "format": "date",
+          "description": "The estimated date of delivery."
+        }
+      },
+      "required": ["carrier", "trackingNumber", "shippedAt", "estimatedDeliveryDate"]
+    },
+    "items": {
+      "type": "array",
+      "description": "A list of items included in the shipment, each containing product details and quantities.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The unique identifier of the product."
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "The quantity of the product shipped."
+          }
+        },
+        "required": ["productId", "quantity"]
+      }
+    }
+  },
+  "required": ["orderId", "shipment", "items"],
+  "additionalProperties": false
+}

@@ -1,0 +1,49 @@
+---
+id: OrderFulfillmentRequested
+name: Order Fulfillment Requested
+version: 0.0.1
+summary: |
+  Indicates a request to fulfill an order.
+owners:
+  - dboyne
+  - msmith
+badges:
+  - content: Newly created!
+    backgroundColor: blue
+    textColor: white
+  - content: 'Channel:Apache Kafka'
+    backgroundColor: yellow
+    textColor: yellow
+schemaPath: schema.json
+---
+
+import Footer from '@catalog/components/footer.astro';
+
+## Overview
+
+The OrderFulfillmentRequested event is triggered when an order needs to be fulfilled. This event helps coordinate the logistics necessary to prepare the shipment.
+
+## Payload
+
+```json title="Example payload"
+{
+  "orderId": "123e4567-e89b-12d3-a456-426614174000",
+  "fulfillmentRequestId": "ful-123e4567-e89b-12d3-a456-426614174000",
+  "warehouseId": "warehouse-us-west",
+  "shippingMethod": "standard",
+  "items": [
+    {
+      "productId": "789e1234-b56c-78d9-e012-3456789fghij",
+      "sku": "sample-sku",
+      "quantity": 2
+    }
+  ],
+  "requestedAt": "2024-07-04T14:48:00Z"
+}
+```
+
+## Schema
+
+<Schema file="schema.json" />
+
+<Footer />

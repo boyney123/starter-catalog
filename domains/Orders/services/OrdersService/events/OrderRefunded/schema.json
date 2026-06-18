@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrderRefundedEvent",
+  "type": "object",
+  "properties": {
+    "orderId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The unique identifier of the refunded order."
+    },
+    "refundId": {
+      "type": "string",
+      "description": "The unique identifier of the refund process."
+    },
+    "paymentTransactionId": {
+      "type": "string",
+      "description": "The unique identifier of the payment transaction associated with the refund."
+    },
+    "amount": {
+      "type": "object",
+      "description": "The total amount refunded including currency details.",
+      "properties": {
+        "value": {
+          "type": "number",
+          "format": "float",
+          "description": "The amount refunded."
+        },
+        "currency": {
+          "type": "string",
+          "description": "The currency of the refunded amount."
+        }
+      },
+      "required": ["value", "currency"]
+    },
+    "reason": {
+      "type": "string",
+      "description": "The reason for the refund."
+    },
+    "refundedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time when the refund was issued."
+    }
+  },
+  "required": ["orderId", "refundId", "paymentTransactionId", "amount", "refundedAt"],
+  "additionalProperties": false
+}

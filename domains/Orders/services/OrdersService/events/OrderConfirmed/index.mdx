@@ -1,7 +1,7 @@
 ---
 id: OrderConfirmed
 name: Order confirmed
-version: 0.0.1
+version: 0.0.2
 summary: |
   Indicates an order has been confirmed
 owners:
@@ -32,19 +32,30 @@ The OrderConfirmed event is triggered when an order has been successfully confir
 ```json title="Example payload"
 {
   "orderId": "123e4567-e89b-12d3-a456-426614174000",
-  "userId": "123e4567-e89b-12d3-a456-426614174000",
-  "orderItems": [
+  "customer": {
+    "customerId": "123e4567-e89b-12d3-a456-426614174000",
+    "email": "customer@example.com"
+  },
+  "items": [
     {
       "productId": "789e1234-b56c-78d9-e012-3456789fghij",
+      "sku": "sample-sku",
       "productName": "Example Product",
       "quantity": 2,
       "unitPrice": 29.99,
-      "totalPrice": 59.98
+      "lineTotal": 59.98
     }
   ],
   "orderStatus": "confirmed",
-  "totalAmount": 150.75,
-  "confirmationTimestamp": "2024-07-04T14:48:00Z"
+  "total": {
+    "amount": 150.75,
+    "currency": "USD"
+  },
+  "shipping": {
+    "method": "standard",
+    "address": "123 Example St, Sample City"
+  },
+  "confirmedAt": "2024-07-04T14:48:00Z"
 }
 ```
 

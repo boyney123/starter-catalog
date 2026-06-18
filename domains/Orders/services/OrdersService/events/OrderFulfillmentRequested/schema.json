@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrderFulfillmentRequestedEvent",
+  "type": "object",
+  "properties": {
+    "orderId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The unique identifier of the order to be fulfilled."
+    },
+    "fulfillmentRequestId": {
+      "type": "string",
+      "description": "The unique identifier of the fulfillment request."
+    },
+    "warehouseId": {
+      "type": "string",
+      "description": "The unique identifier of the warehouse that will fulfill the order."
+    },
+    "shippingMethod": {
+      "type": "string",
+      "description": "The shipping method used for the order."
+    },
+    "items": {
+      "type": "array",
+      "description": "A list of items included in the order to be fulfilled, each containing product details and quantities.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The unique identifier of the product."
+          },
+          "sku": {
+            "type": "string",
+            "description": "The stock keeping unit of the product."
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "The quantity of the product to fulfill."
+          }
+        },
+        "required": ["productId", "sku", "quantity"]
+      }
+    },
+    "requestedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time when the fulfillment was requested."
+    }
+  },
+  "required": ["orderId", "fulfillmentRequestId", "warehouseId", "shippingMethod", "items", "requestedAt"],
+  "additionalProperties": false
+}
