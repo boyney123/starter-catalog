@@ -1,0 +1,24 @@
+{
+  "title": "OrderRefundedEvent",
+  "type": "object",
+  "properties": {
+    "orderId": {
+      "type": "string",
+      "description": "The unique identifier for the order being refunded."
+    },
+    "refundAmount": {
+      "type": "number",
+      "description": "The amount being refunded to the customer."
+    },
+    "refundReason": {
+      "type": "string",
+      "description": "The reason for initiating the refund."
+    },
+    "refundedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The timestamp when the refund was processed."
+    }
+  },
+  "required": ["orderId", "refundAmount", "refundReason", "refundedAt"]
+}
