@@ -26,6 +26,15 @@ sends:
   - id: OrderConfirmed
     to:
       - id: 'orders.{env}.events'
+  - id: OrderFulfillmentRequested
+    to:
+      - id: 'orders.{env}.events'
+  - id: OrderShipped
+    to:
+      - id: 'orders.{env}.events'
+  - id: OrderRefunded
+    to:
+      - id: 'orders.{env}.events'
   - id: AddInventory
     version: 0.0.3
     to:
