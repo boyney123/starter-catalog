@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrderRefundedEvent",
+  "type": "object",
+  "properties": {
+    "orderId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The unique identifier of the order that was refunded."
+    },
+    "userId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The unique identifier of the user who placed the order."
+    },
+    "orderStatus": {
+      "type": "string",
+      "description": "The status set to 'refunded' for this event.",
+      "enum": ["refunded"]
+    },
+    "totalAmount": {
+      "type": "number",
+      "format": "float",
+      "description": "The total amount of the original order."
+    },
+    "refundAmount": {
+      "type": "number",
+      "format": "float",
+      "description": "The amount refunded to the customer."
+    },
+    "refundReason": {
+      "type": "string",
+      "description": "The reason for the refund."
+    },
+    "refundedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time when the refund was processed (ISO 8601)."
+    }
+  },
+  "required": ["orderId", "userId", "orderStatus", "totalAmount", "refundAmount", "refundReason", "refundedAt"],
+  "additionalProperties": false
+}

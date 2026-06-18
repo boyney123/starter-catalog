@@ -1,0 +1,9 @@
+{
+  "orderId": "123e4567-e89b-12d3-a456-426614174000",
+  "userId": "123e4567-e89b-12d3-a456-426614174000",
+  "orderStatus": "refunded",
+  "totalAmount": 150.75,
+  "refundAmount": 150.75,
+  "refundReason": "customer refund",
+  "refundedAt": "2024-07-04T15:00:00Z"
+}
