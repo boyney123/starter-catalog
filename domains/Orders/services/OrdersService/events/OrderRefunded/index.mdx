@@ -1,0 +1,53 @@
+---
+id: OrderRefunded
+name: Order refunded
+version: 0.0.1
+summary: |
+  Emitted whenever an order is refunded, providing details for downstream consumers (such as finance and notifications) to process the refund independently of cancellations.
+owners:
+  - dboyne
+  - msmith
+badges:
+  - content: Recently added!
+    backgroundColor: green
+    textColor: green
+  - content: 'Channel:Apache Kafka'
+    backgroundColor: yellow
+    textColor: yellow
+schemaPath: schema.json
+---
+
+import Footer from '@catalog/components/footer.astro';
+
+## Overview
+
+The `OrderRefunded` event is triggered whenever an existing order is refunded, either fully or partially. This event ensures that downstream systems such as Finance and Notification services are informed about refund activity to initiate appropriate actions (e.g., issuing payments, sending customer notifications) without coupling directly to cancellation flows.
+
+## Example payload
+
+```json title="Example payload"
+{
+  "orderId": "123e4567-e89b-12d3-a456-426614174000",
+  "userId": "123e4567-e89b-12d3-a456-426614174000",
+  "orderItems": [
+    {
+      "productId": "abc123",
+      "productName": "Sample Item",
+      "quantity": 1,
+      "unitPrice": 15.99,
+      "totalPrice": 15.99
+    }
+  ],
+  "orderStatus": "refunded",
+  "totalAmount": 15.99,
+  "refundAmount": 15.99,
+  "refundReason": "duplicate order",
+  "timestamp": "2026-06-24T14:01:00Z"
+}
+```
+
+## Schema
+
+<Schema title="OrderRefunded Event Schema" file="schema.json" />
+
+<Footer />
