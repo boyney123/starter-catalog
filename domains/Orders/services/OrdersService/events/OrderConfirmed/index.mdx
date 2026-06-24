@@ -3,7 +3,7 @@ id: OrderConfirmed
 name: Order confirmed
 version: 0.0.1
 summary: |
-  Indicates an order has been confirmed
+  Indicates an order has been confirmed and is ready for next processing stages (inventory, payment, shipping).
 owners:
   - dboyne
   - msmith
@@ -21,11 +21,7 @@ import Footer from '@catalog/components/footer.astro';
 
 ## Overview
 
-The OrderConfirmed event is triggered when an order has been successfully confirmed. This event notifies relevant services that the order is ready for further processing, such as inventory adjustment, payment finalization, and preparation for shipping.
-
-## Architecture Diagram
-
-<NodeGraph />
+The `OrderConfirmed` event is emitted when an order has been successfully confirmed. This event's payload ensures the current `orderStatus` is always present and valid, and includes up-to-date order item and amount information as part of the revised Orders Service logic (v0.0.3).
 
 ## Payload
 
@@ -44,7 +40,7 @@ The OrderConfirmed event is triggered when an order has been successfully confir
   ],
   "orderStatus": "confirmed",
   "totalAmount": 150.75,
-  "confirmationTimestamp": "2024-07-04T14:48:00Z"
+  "confirmationTimestamp": "2026-06-24T14:48:00Z"
 }
 ```
 

@@ -1,9 +1,10 @@
 ---
 id: OrderCancelled
 name: Order cancelled
+description: Order was cancelled, not fulfilled
 version: 0.0.1
 summary: |
-  Indicates an order has been canceled
+  Indicates an order has been canceled. Includes cancellation reason.
 owners:
   - dboyne
   - msmith
@@ -21,7 +22,7 @@ import Footer from '@catalog/components/footer.astro';
 
 ## Overview
 
-The OrderCancelled event is triggered whenever an existing order is cancelled. This event ensures that all relevant services are notified of the cancellation, allowing them to take appropriate actions such as updating inventory levels, refunding payments, and notifying the user. The event helps maintain consistency across the system by ensuring all dependent services are aware of the order cancellation.
+The `OrderCancelled` event is triggered whenever an existing order is cancelled. The event payload now always includes a `cancellationReason` field, which is kept up-to-date as part of improved workflows and validation. This ensures all relevant services can respond accurately, whether due to customer request, inventory issues, or validation failures.
 
 ## Example payload
 
@@ -41,13 +42,11 @@ The OrderCancelled event is triggered whenever an existing order is cancelled. T
   "orderStatus": "cancelled",
   "totalAmount": 59.98,
   "cancellationReason": "Customer requested cancellation",
-  "timestamp": "2024-07-04T14:48:00Z"
+  "timestamp": "2026-06-24T14:48:00Z"
 }
 ```
 
 ## Schema
-
-JSON schema for the event.
 
 <Schema title="JSON Schema" file="schema.json" />
 

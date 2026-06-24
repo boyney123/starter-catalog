@@ -3,7 +3,7 @@ id: OrdersService
 version: 0.0.3
 name: Orders Service
 summary: |
-  Service that handles orders
+  Service that handles all operations related to customer orders, including order creation, updates, cancellations, amendments, and confirmation.
 owners:
   - dboyne
 receives:
@@ -45,7 +45,7 @@ import Footer from '@catalog/components/footer.astro';
 
 ## Overview
 
-The Orders Service is responsible for managing customer orders within the system. It handles order creation, updating, status tracking, and interactions with other services such as Inventory, Payment, and Notification services to ensure smooth order processing and fulfillment.
+The Orders Service manages key workflows for customer orders throughout their lifecycle—from placement and validation to amendments, cancellation, and confirmation. Enhanced validation and handling improvements now ensure that order events (confirmation, amendment, cancellation) consistently reflect updated business logic, including proper setting of status and reasons, with minor code refactoring for reliability.
 
 <Tiles>
   <Tile
@@ -73,6 +73,12 @@ The Orders Service is responsible for managing customer orders within the system
     description="This service receives messages from other services"
   />
 </Tiles>
+
+## Key updates (0.0.3)
+
+- Improved order cancellation and amendment message logic
+- Enforced validation on order operations
+- Refactored flows and minor fixes for better reliability
 
 ## Architecture diagram
 
