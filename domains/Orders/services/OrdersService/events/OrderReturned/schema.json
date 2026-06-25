@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "io.eventcatalog.orders.event.order-returned",
+  "title": "OrderReturned",
+  "description": "Published when a customer returns an order or part of an order.",
+  "type": "object",
+  "properties": {
+    "orderId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Identifier of the order that was returned."
+    },
+    "userId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Identifier of the customer who placed the order."
+    },
+    "returnedItems": {
+      "type": "array",
+      "description": "The items being returned.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "Identifier of the returned product."
+          },
+          "productName": {
+            "type": "string",
+            "description": "Name of the returned product."
+          },
+          "quantity": {
+            "type": "number",
+            "description": "Quantity of the product being returned."
+          }
+        },
+        "required": [
+          "productId",
+          "quantity"
+        ],
+        "additionalProperties": true
+      }
+    },
+    "orderStatus": {
+      "type": "string",
+      "enum": [
+        "returned"
+      ]
+    },
+    "returnReason": {
+      "type": "string",
+      "description": "Why the order was returned."
+    },
+    "totalAmount": {
+      "type": "number",
+      "description": "Total amount of the original order."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 time the order was returned."
+    }
+  },
+  "required": [
+    "orderId",
+    "userId",
+    "returnedItems",
+    "orderStatus",
+    "returnReason",
+    "timestamp"
+  ],
+  "additionalProperties": false
+}

@@ -32,6 +32,22 @@ sends:
   - id: OrderConfirmed
     to:
       - id: 'orders.{env}.events'
+  - id: PaymentReceived
+    version: 0.0.1
+    to:
+      - id: 'orders.{env}.events'
+  - id: OrderShipped
+    version: 0.0.1
+    to:
+      - id: 'orders.{env}.events'
+  - id: OrderDelivered
+    version: 0.0.1
+    to:
+      - id: 'orders.{env}.events'
+  - id: OrderReturned
+    version: 0.0.1
+    to:
+      - id: 'orders.{env}.events'
   - id: AddInventory
     version: 0.0.3
     to:
@@ -65,6 +81,9 @@ The REST API for this service is described in the OpenAPI specification linked i
 
 ## Inventory readiness
 The Orders Service listens for `InventoryCreated` events on the inventory events channel. When a product that previously lacked stock becomes available again, the service re-evaluates orders marked as `awaiting-stock` for that SKU, transitions them to `confirmed`, and republishes an `OrderConfirmed` event so downstream consumers can continue processing.
+
+## Payment and fulfillment events
+Payment capture, shipping, delivery, and return milestones are also emitted on the orders events channel. The service publishes `PaymentReceived` when payments clear, then `OrderShipped`, `OrderDelivered`, and `OrderReturned` as respective fulfillment steps complete so downstream services can trigger notifications, inventory reconciliation, or refunds.
 
 <Tiles>
   <Tile

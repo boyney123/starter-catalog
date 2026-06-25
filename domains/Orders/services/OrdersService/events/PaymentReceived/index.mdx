@@ -1,0 +1,44 @@
+---
+id: PaymentReceived
+name: Payment received
+version: 0.0.1
+summary: |
+  Indicates the Orders Service has captured payment for an order, allowing billing and fulfillment to proceed.
+owners:
+  - dboyne
+  - msmith
+badges:
+  - content: Recently updated!
+    backgroundColor: green
+    textColor: green
+  - content: 'Channel:Apache Kafka'
+    backgroundColor: yellow
+    textColor: yellow
+schemaPath: schema.json
+---
+
+import Footer from '@catalog/components/footer.astro';
+
+## Overview
+
+The PaymentReceived event is emitted once the Orders Service successfully records a payment capture. Downstream services can rely on this event to trigger financial reconciliation, update customer statements, or begin fulfillment activities that require a cleared payment.
+
+## Example payload
+
+```json title="Sample payload"
+{
+  "orderId": "123e4567-e89b-12d3-a456-426614174000",
+  "userId": "123e4567-e89b-12d3-a456-426614174000",
+  "amount": 149.99,
+  "paymentMethod": "card",
+  "transactionId": "txn_7a8b9c0d",
+  "paymentStatus": "paid",
+  "timestamp": "2025-02-18T18:30:00Z"
+}
+```
+
+## Schema
+
+<Schema file="schema.json" />
+
+<Footer />
