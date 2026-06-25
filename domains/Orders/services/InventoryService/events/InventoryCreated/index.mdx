@@ -1,0 +1,56 @@
+---
+id: InventoryCreated
+name: Inventory created
+version: 0.0.1
+summary: |
+  Signals that a previously unavailable product has been added to inventory and is ready for fulfillment.
+owners:
+  - dboyne
+  - full-stack
+  - mobile-devs
+schemaPath: schema.json
+---
+
+import Footer from '@catalog/components/footer.astro';
+
+## Overview
+The `InventoryCreated` event is emitted when sufficient stock for a SKU becomes available and is registered in inventory. It is published to the `inventory.{env}.events` channel, giving downstream services — such as Orders — a reliable signal to re-check backordered items tied to that SKU.
+
+<Tiles>
+  <Tile
+    icon="UserGroupIcon"
+    href="/docs/teams/full-stack"
+    title="Contact the team"
+    description="Any questions? Feel free to contact the owners"
+  />
+  <Tile
+    icon="DocumentIcon"
+    href={`/generated/events/Inventory/${frontmatter.id}/schema.json`}
+    title="View the schema"
+    description="Open the JSON schema in your browser"
+  />
+</Tiles>
+
+<NodeGraph />
+
+<SchemaViewer file="schema.json" title="InventoryCreated payload" maxHeight="500" />
+
+### Payload example
+```json title="InventoryCreated payload"
+{
+  "eventId": "inv-created-123",
+  "productId": "PROD-456",
+  "availableQuantity": 100,
+  "locationId": "WH-1",
+  "timestamp": "2026-06-25T09:12:00Z",
+  "source": "inventory-api"
+}
+```
+
+### Producing the event
+Emit this event whenever a new product batch is registered or a previously out-of-stock SKU returns to availability. Include contextual metadata (location, timestamp, source) so consumers can trace why the stock appeared.
+
+### Consuming the event
+Consumers interested in stock availability (such as the Orders Service) should filter for `productId` and confirm any waiting orders for that SKU. Once inventory is confirmed, those orders can transition from `awaiting-stock` to `confirmed` and emit the corresponding order events.
+
+<Footer />
