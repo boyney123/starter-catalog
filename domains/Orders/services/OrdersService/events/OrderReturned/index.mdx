@@ -1,0 +1,50 @@
+---
+id: OrderReturned
+name: Order returned
+version: 0.0.1
+summary: |
+  Indicates the customer has returned an order or part of an order and it has been processed by the Orders Service.
+owners:
+  - dboyne
+  - msmith
+badges:
+  - content: Recently updated!
+    backgroundColor: green
+    textColor: green
+  - content: 'Channel:Apache Kafka'
+    backgroundColor: yellow
+    textColor: yellow
+schemaPath: schema.json
+---
+
+import Footer from '@catalog/components/footer.astro';
+
+## Overview
+
+OrderReturned is emitted when a customer return completes. It is a key signal for finance to refund the amount, for inventory to reshelve returned stock, and for customer service to close the return case.
+
+## Example payload
+
+```json title="Sample payload"
+{
+  "orderId": "123e4567-e89b-12d3-a456-426614174000",
+  "userId": "123e4567-e89b-12d3-a456-426614174000",
+  "returnedItems": [
+    {
+      "productId": "789e1234-b56c-78d9-e012-3456789fghij",
+      "productName": "Example Product",
+      "quantity": 1
+    }
+  ],
+  "orderStatus": "returned",
+  "returnReason": "Customer changed mind",
+  "totalAmount": 149.99,
+  "timestamp": "2025-02-25T10:05:00Z"
+}
+```
+
+## Schema
+
+<Schema file="schema.json" />
+
+<Footer />

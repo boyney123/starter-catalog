@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "io.eventcatalog.orders.event.payment-received",
+  "title": "PaymentReceived",
+  "description": "Published when a payment has been received and captured for an order.",
+  "type": "object",
+  "properties": {
+    "orderId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Identifier of the order the payment is for."
+    },
+    "userId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Identifier of the customer who placed the order."
+    },
+    "amount": {
+      "type": "number",
+      "description": "Amount captured for this payment."
+    },
+    "paymentMethod": {
+      "type": "string",
+      "description": "Method used to take the payment (e.g. card, PayPal).",
+      "examples": [
+        "card",
+        "paypal"
+      ]
+    },
+    "transactionId": {
+      "type": "string",
+      "description": "Payment provider transaction identifier."
+    },
+    "paymentStatus": {
+      "type": "string",
+      "enum": [
+        "paid"
+      ],
+      "description": "Status of the payment after capture."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 time the payment was received."
+    }
+  },
+  "required": [
+    "orderId",
+    "userId",
+    "amount",
+    "paymentMethod",
+    "paymentStatus",
+    "timestamp"
+  ],
+  "additionalProperties": false
+}

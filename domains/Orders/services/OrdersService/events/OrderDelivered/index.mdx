@@ -1,0 +1,42 @@
+---
+id: OrderDelivered
+name: Order delivered
+version: 0.0.1
+summary: |
+  Signals that the order has reached the customer and is no longer in transit.
+owners:
+  - dboyne
+  - msmith
+badges:
+  - content: Recently updated!
+    backgroundColor: green
+    textColor: green
+  - content: 'Channel:Apache Kafka'
+    backgroundColor: yellow
+    textColor: yellow
+schemaPath: schema.json
+---
+
+import Footer from '@catalog/components/footer.astro';
+
+## Overview
+
+OrderDelivered closes the fulfillment loop by telling downstream consumers the package arrived. This event is a good trigger for follow-up feedback requests, notification workflows, or loyalty programs that reward timely delivery.
+
+## Example payload
+
+```json title="Sample payload"
+{
+  "orderId": "123e4567-e89b-12d3-a456-426614174000",
+  "userId": "123e4567-e89b-12d3-a456-426614174000",
+  "orderStatus": "delivered",
+  "deliveredAt": "2025-02-22T13:10:00Z",
+  "timestamp": "2025-02-22T13:12:00Z"
+}
+```
+
+## Schema
+
+<Schema file="schema.json" />
+
+<Footer />

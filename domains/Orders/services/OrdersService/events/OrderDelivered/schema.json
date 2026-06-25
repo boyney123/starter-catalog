@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "io.eventcatalog.orders.event.order-delivered",
+  "title": "OrderDelivered",
+  "description": "Published when an order has been delivered to the customer.",
+  "type": "object",
+  "properties": {
+    "orderId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Identifier of the order that was delivered."
+    },
+    "userId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Identifier of the customer who placed the order."
+    },
+    "orderStatus": {
+      "type": "string",
+      "enum": [
+        "delivered"
+      ]
+    },
+    "deliveredAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 time the order was delivered."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 time the event was published."
+    }
+  },
+  "required": [
+    "orderId",
+    "userId",
+    "orderStatus",
+    "deliveredAt",
+    "timestamp"
+  ],
+  "additionalProperties": false
+}

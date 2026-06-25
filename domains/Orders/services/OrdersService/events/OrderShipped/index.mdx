@@ -1,0 +1,51 @@
+---
+id: OrderShipped
+name: Order shipped
+version: 0.0.1
+summary: |
+  Indicates the order has been dispatched to the carrier and is en route to the customer.
+owners:
+  - dboyne
+  - msmith
+badges:
+  - content: Recently updated!
+    backgroundColor: green
+    textColor: green
+  - content: 'Channel:Apache Kafka'
+    backgroundColor: yellow
+    textColor: yellow
+schemaPath: schema.json
+---
+
+import Footer from '@catalog/components/footer.astro';
+
+## Overview
+
+OrderShipped is emitted once the Orders Service captures the carrier assignment and tracking details for the order. Downstream services can start fulfillment notifications, shipment tracking, or inventory reconciliation based on this event.
+
+## Example payload
+
+```json title="Sample payload"
+{
+  "orderId": "123e4567-e89b-12d3-a456-426614174000",
+  "userId": "123e4567-e89b-12d3-a456-426614174000",
+  "orderItems": [
+    {
+      "productId": "789e1234-b56c-78d9-e012-3456789fghij",
+      "productName": "Example Product",
+      "quantity": 1
+    }
+  ],
+  "orderStatus": "shipped",
+  "carrier": "dhl",
+  "trackingNumber": "DHL-1234-5678",
+  "estimatedDelivery": "2025-02-21T09:00:00Z",
+  "timestamp": "2025-02-19T08:25:00Z"
+}
+```
+
+## Schema
+
+<Schema file="schema.json" />
+
+<Footer />
