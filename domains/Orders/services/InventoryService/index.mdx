@@ -30,6 +30,12 @@ receives:
   - id: GetInventoryStatus
   - id: GetInventoryList
 sends:
+  - id: InventoryCreated
+    version: 0.0.1
+    to:
+      - id: 'inventory.{env}.events'
+        parameters:
+          env: staging
   - id: InventoryAdjusted
     version: 1.0.1
     to:
@@ -48,6 +54,8 @@ import Footer from '@catalog/components/footer.astro';
 ## Overview
 
 The Inventory Service is a critical component of the system responsible for managing product stock levels, tracking inventory movements, and ensuring product availability. It interacts with other services to maintain accurate inventory records and supports operations such as order fulfillment, restocking, and inventory audits.
+
+Whenever a new batch of product stock is registered and becomes available for fulfillment, the service emits an `InventoryCreated` event so downstream services (like Orders) can re-evaluate backordered items.
 
 <Tiles>
   <Tile

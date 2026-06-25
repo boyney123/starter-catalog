@@ -3,10 +3,16 @@ id: OrdersService
 version: 0.0.3
 name: Orders Service
 summary: |
-  Service that handles orders
+  Service that manages order placement, lifecycle updates, and fulfillment decisions via its HTTP API and inventory-driven events.
 owners:
   - dboyne
 receives:
+  - id: InventoryCreated
+    version: 0.0.1
+    from:
+      - id: 'inventory.{env}.events'
+        parameters:
+          env: staging
   - id: InventoryAdjusted
     version: 1.0.1
     from:
@@ -46,6 +52,19 @@ import Footer from '@catalog/components/footer.astro';
 ## Overview
 
 The Orders Service is responsible for managing customer orders within the system. It handles order creation, updating, status tracking, and interactions with other services such as Inventory, Payment, and Notification services to ensure smooth order processing and fulfillment.
+
+## HTTP API
+The REST API for this service is described in the OpenAPI specification linked in this page. It exposes lightweight endpoints for service health and the full order lifecycle:
+
+- `GET /health` — returns a simple health response that includes the service name and a status flag.
+- `POST /orders` — accepts the `PlaceOrderCommand`, schedules the order for processing, and returns the created order along with the events that were published as a result.
+- `GET /orders` — lists all orders currently tracked by the service.
+- `GET /orders/{orderId}` — fetches a single order by identifier.
+- `DELETE /orders/{orderId}` — requests order cancellation and captures an optional reason for the cancellation.
+- `POST /orders/{orderId}/refund` — records a refund request for an existing order including the amount and motivation.
+
+## Inventory readiness
+The Orders Service listens for `InventoryCreated` events on the inventory events channel. When a product that previously lacked stock becomes available again, the service re-evaluates orders marked as `awaiting-stock` for that SKU, transitions them to `confirmed`, and republishes an `OrderConfirmed` event so downstream consumers can continue processing.
 
 <Tiles>
   <Tile
