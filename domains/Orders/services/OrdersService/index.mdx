@@ -66,6 +66,12 @@ The REST API for this service is described in the OpenAPI specification linked i
 ## Inventory readiness
 The Orders Service listens for `InventoryCreated` events on the inventory events channel. When a product that previously lacked stock becomes available again, the service re-evaluates orders marked as `awaiting-stock` for that SKU, transitions them to `confirmed`, and republishes an `OrderConfirmed` event so downstream consumers can continue processing.
 
+## Persistence
+Orders are treated as the Orders Service's system of record. When the `ORDERS_DATABASE_URL` environment variable is supplied, the service instantiates a `PostgresOrderRepository` and routes every lifecycle mutation (place order, stock adjustments, cancellations, refunds, etc.) through Postgres using that connection string. The same repository is read when returning orders via the HTTP API, ensuring the HTTP endpoints always reflect what was written to the relational store. Without that environment variable set, the service continues to use the in-memory `OrderRepository`, which is useful for local demos and smoke testing.
+
+## Transactional outbox
+Public domain events are written to the orders database's `outbox` table as part of the same transaction that saves or updates an order. The `PostgresOrderRepository` appends each envelope with its `message_id` and payload before the service publishes the message onto `orders.{env}.events`, guaranteeing the outbox reflects every event that was produced. A downstream outbox processor or relay can safely read from this table, emit the JSON payloads, and mark them delivered without risk of losing events that were already committed to Postgres.
+
 <Tiles>
   <Tile
     icon="DocumentIcon"
