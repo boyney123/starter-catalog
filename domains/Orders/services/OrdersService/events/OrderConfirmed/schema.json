@@ -50,17 +50,12 @@
       "type": "string",
       "description": "The current status of the order after confirmation."
     },
-    "totalAmount": {
-      "type": "number",
-      "format": "float",
-      "description": "The total amount of the confirmed order."
-    },
     "confirmationTimestamp": {
       "type": "string",
       "format": "date-time",
       "description": "The date and time when the order was confirmed."
     }
   },
-  "required": ["orderId", "userId", "orderItems", "orderStatus", "totalAmount", "confirmationTimestamp"],
+  "required": ["orderId", "userId", "orderItems", "orderStatus", "confirmationTimestamp"],
   "additionalProperties": false
 }
