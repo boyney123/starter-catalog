@@ -21,7 +21,7 @@ import Footer from '@catalog/components/footer.astro';
 
 ## Overview
 
-The OrderConfirmed event is triggered when an order has been successfully confirmed. This event notifies relevant services that the order is ready for further processing, such as inventory adjustment, payment finalization, and preparation for shipping.
+The OrderConfirmed event is triggered when an order has been successfully confirmed. This event notifies relevant services that the order is ready for further processing, such as inventory adjustment, payment finalization, and preparation for shipping. The event payload now only carries per-item details and status metadata; any order totals are handled by downstream systems or aggregated through other queries.
 
 ## Architecture Diagram
 
@@ -43,7 +43,6 @@ The OrderConfirmed event is triggered when an order has been successfully confir
     }
   ],
   "orderStatus": "confirmed",
-  "totalAmount": 150.75,
   "confirmationTimestamp": "2024-07-04T14:48:00Z"
 }
 ```
