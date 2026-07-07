@@ -21,6 +21,18 @@ import Footer from '@catalog/components/footer.astro';
 
 `CreateOrder` is sent by the [[service|checkout-orchestrator]] and handled by the [[service|order-service]]. It is the final step of the checkout saga — once inventory is reserved and payment is authorized, this command creates the order. On success the Order Service publishes an [[event|order-created]] event.
 
+## Totals breakdown
+
+The command now supplies a `totals` object instead of a single `total` value. This gives the Order Service a clear decomposition of the price the customer pays:
+
+| Field | Description |
+| --- | --- |
+| `gross` | Sum of the ordered lines before discounts are applied. |
+| `discount` | Amount removed from the gross total by promotions. |
+| `net` | Final amount the customer is charged (`gross` minus `discount`). |
+
+At the moment the Checkout Saga sends this command, promotions have not been applied yet, so `gross` and `net` are equal and `discount` is zero.
+
 ## Architecture diagram
 
 <NodeGraph />

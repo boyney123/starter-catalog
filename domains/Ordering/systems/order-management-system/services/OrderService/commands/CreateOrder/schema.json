@@ -36,10 +36,27 @@
         "required": ["productId", "quantity", "unitPrice"]
       }
     },
-    "total": {
-      "description": "Order total in minor units (e.g. cents)",
-      "type": "integer",
-      "minimum": 0
+    "totals": {
+      "description": "Breakdown of the order total in minor units (e.g. cents)",
+      "type": "object",
+      "properties": {
+        "gross": {
+          "description": "Sum of line prices before any discount",
+          "type": "integer",
+          "minimum": 0
+        },
+        "discount": {
+          "description": "Amount deducted by promotions",
+          "type": "integer",
+          "minimum": 0
+        },
+        "net": {
+          "description": "Amount the customer pays (gross - discount)",
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": ["gross", "net"]
     },
     "currency": {
       "description": "ISO 4217 currency code",
@@ -51,5 +68,5 @@
       "type": "string"
     }
   },
-  "required": ["cartId", "customerId", "items", "total", "currency"]
+  "required": ["cartId", "customerId", "items", "totals", "currency"]
 }
