@@ -19,7 +19,9 @@ receives:
         parameters:
           env: staging
 sends:
-  - id: FraudCheckCompleted
+  - id: FraudCheckPassed
+    version: 0.0.1
+  - id: FraudCheckFailed
     version: 0.0.1
 owners:
   - dboyne
@@ -38,6 +40,17 @@ The Fraud Detection Service is responsible for analyzing payment transactions in
 - **Risk Scoring**: Calculates risk scores for each transaction
 - **Automated Blocking**: Can automatically block high-risk transactions
 - **Manual Review Queue**: Flags medium-risk transactions for manual review
+
+## Verdict events
+
+Publishes two verdict events to Kafka so downstream services can react to pass/fail outcomes:
+
+- **`FraudCheckPassed`** – emitted when the accumulated risk score stays below the configured threshold. Carries the payment+order IDs, the `checkedAt` timestamp, and the integer score (0-100) that services use for dashboards.
+- **`FraudCheckFailed`** – emitted when the risk score exceeds the threshold. Includes the same payload plus the `declineReason` enumeration that pinpoints the strongest fraud signal (`HIGH_RISK_SCORE`, `BLOCKLISTED`, `VELOCITY`, or `MISMATCH`).
+
+## Scoring
+
+Rules contribute weighted signals whose capped sum falls between 0 and 1. The score is published as an integer percentage (0-100) to simplify dashboards while preserving sensitivity: a payment fails when the percentage score meets or exceeds the configurable risk threshold (default 70). The `declineReason` field captures the rule that sent the score over the threshold, so downstream services can explain why the payment was rejected.
 
 ## API Endpoints
 
