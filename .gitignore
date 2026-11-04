@@ -23,6 +23,9 @@ yarn-error.log*
 
 .eventcatalog-core
 
+# Fitness check reports (npx eventcatalog fitness check)
+.eventcatalog/
+
 .env
 .env-*
 

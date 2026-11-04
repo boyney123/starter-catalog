@@ -1,0 +1,33 @@
+---
+id: review-system
+name: Review System
+version: 1.0.0
+summary: |
+  Internal system that takes product reviews from submission to publication. It accepts and moderates reviews, records helpful votes and flags, and aggregates published reviews into product ratings.
+owners:
+  - reviews-platform
+services:
+  - id: review-api
+  - id: review-moderation-worker
+  - id: rating-aggregator
+containers:
+  - id: review-database
+  - id: rating-cache
+badges:
+  - content: Internal
+    backgroundColor: gray
+    textColor: gray
+    icon: LockClosedIcon
+---
+
+import Footer from '@catalog/components/footer.astro';
+
+## Overview
+
+The **Review System** owns customer reviews end to end. The [[service|review-api]] accepts new reviews, votes and flags and stores them in the [[container|review-database]]. The [[service|review-moderation-worker]] moderates each submitted review and records the decision. The [[service|rating-aggregator]] turns published reviews into the star ratings shown on the storefront, cached in the [[container|rating-cache]].
+
+## Architecture diagram
+
+<NodeGraph />
+
+<Footer />
