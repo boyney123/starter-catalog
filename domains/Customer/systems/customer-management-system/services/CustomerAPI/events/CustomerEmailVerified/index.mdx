@@ -1,0 +1,31 @@
+---
+id: customer-email-verified
+name: Customer Email Verified
+version: 1.0.0
+summary: |
+  Published when a customer successfully verifies their email address.
+owners:
+  - customer-platform
+badges:
+  - content: 'Broker:Kafka'
+    backgroundColor: blue
+    textColor: blue
+    icon: BoltIcon
+schemaPath: schema.json
+---
+
+import Footer from '@catalog/components/footer.astro';
+
+## Overview
+
+`CustomerEmailVerified` is published by the [[service|customer-api]] whenever a customer completes the email verification flow. Downstream systems can consume this event to unlock features that require a verified email address, such as order confirmation notifications or account recovery.
+
+The event is published on the Kafka topic `customers.customer-email-verified.v1`.
+
+<SchemaViewer file="schema.json" title="JSON Schema" maxHeight="500" />
+
+## Architecture diagram
+
+<NodeGraph />
+
+<Footer />

@@ -20,6 +20,8 @@ sends:
     version: 1.0.0
   - id: customer-updated
     version: 1.0.0
+  - id: customer-email-verified
+    version: 1.0.0
 writesTo:
   - id: customer-database
 readsFrom:
@@ -37,7 +39,7 @@ import Footer from '@catalog/components/footer.astro';
 
 ## Overview
 
-The **Customer API** is the front door to the Customer Management System. It validates incoming commands, persists customer data to the [[container|customer-database]], and publishes domain events (<ResourceLink id="customer-registered" type="event">CustomerRegistered</ResourceLink>, <ResourceLink id="customer-updated" type="event">CustomerUpdated</ResourceLink>) so the rest of the business can react to changes.
+The **Customer API** is the front door to the Customer Management System. It validates incoming commands, persists customer data to the [[container|customer-database]], and publishes domain events (<ResourceLink id="customer-registered" type="event">CustomerRegistered</ResourceLink>, <ResourceLink id="customer-updated" type="event">CustomerUpdated</ResourceLink>, <ResourceLink id="customer-email-verified" type="event">CustomerEmailVerified</ResourceLink>) so the rest of the business can react to changes.
 
 <Tiles>
   <Tile icon="BoltIcon" href={`/visualiser/services/${frontmatter.id}/${frontmatter.version}`} title={`Sends ${frontmatter.sends.length} messages`} description="Domain events published when customer data changes" />
@@ -50,7 +52,7 @@ The **Customer API** is the front door to the Customer Management System. It val
 |------|-------------|
 | Command handling | Validates and applies [[command\|register-customer]] and [[command\|update-customer]]. |
 | Reads | Serves [[query\|get-customer]] directly from the customer database. |
-| Event publishing | Emits [[event\|customer-registered]] and [[event\|customer-updated]] on every change. |
+| Event publishing | Emits [[event\|customer-registered]], [[event\|customer-updated]], and [[event\|customer-email-verified]] on every relevant change. |
 | Persistence | Reads from and writes to the [[container\|customer-database]] (system of record). |
 
 ## Architecture diagram

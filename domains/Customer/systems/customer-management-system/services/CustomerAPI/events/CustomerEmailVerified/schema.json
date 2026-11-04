@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CustomerEmailVerified",
+  "description": "Emitted when a customer verifies their email address",
+  "type": "object",
+  "properties": {
+    "eventId": { "description": "Unique identifier for this event", "type": "string", "format": "uuid" },
+    "occurredAt": { "description": "Time the email was verified", "type": "string", "format": "date-time" },
+    "customerId": { "description": "The customer whose email was verified", "type": "string", "format": "uuid" },
+    "email": { "description": "The verified email address", "type": "string", "format": "email" }
+  },
+  "required": ["eventId", "occurredAt", "customerId", "email"]
+}
