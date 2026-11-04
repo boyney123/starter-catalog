@@ -1,0 +1,59 @@
+name: Catalog checks
+
+# Runs on every pull request, including the documentation PRs opened by EventCatalog Agents,
+# so the catalog is linted, checked against its architecture rules and built before merging.
+on:
+  pull_request:
+  push:
+    branches: [main, eventcatalog-v5]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: EventCatalog linter
+        run: npx eventcatalog-linter
+
+  fitness:
+    name: Fitness functions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Architecture fitness functions (fitness/)
+        run: npx eventcatalog fitness check
+      - name: Upload fitness report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fitness-report
+          path: .eventcatalog/fitness/results.json
+          if-no-files-found: ignore
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Build the catalog
+        run: npx eventcatalog build
