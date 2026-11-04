@@ -6,10 +6,17 @@
   "properties": {
     "paymentId": { "type": "string", "format": "uuid" },
     "orderId": { "type": "string", "format": "uuid" },
-    "amount": { "type": "integer", "description": "Amount charged, in minor units (e.g. cents)" },
-    "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+    "amount": {
+      "type": "object",
+      "description": "Amount charged",
+      "properties": {
+        "value": { "type": "integer", "description": "Amount in minor units (e.g. cents)" },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" }
+      },
+      "required": ["value", "currency"]
+    },
     "processorReference": { "type": "string", "description": "Stripe's charge identifier" },
     "succeededAt": { "type": "string", "format": "date-time" }
   },
-  "required": ["paymentId", "orderId", "amount", "currency", "succeededAt"]
+  "required": ["paymentId", "orderId", "amount", "succeededAt"]
 }
