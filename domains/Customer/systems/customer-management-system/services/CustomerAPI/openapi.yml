@@ -107,6 +107,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    delete:
+      operationId: closeCustomer
+      summary: Close a customer account
+      description: Closes the customer's account. On success a `CustomerClosed` event is published. Closing an already-closed account does nothing.
+      tags:
+        - Customers
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloseCustomerRequest'
+      responses:
+        '204':
+          description: The account is closed.
+        '400':
+          description: The request body was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No customer exists with that identifier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
     Customer:
@@ -154,6 +181,14 @@ components:
         status:
           type: string
           enum: [ACTIVE, SUSPENDED, CLOSED]
+    CloseCustomerRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum: [CUSTOMER_REQUEST, FRAUD, INACTIVITY]
+          default: CUSTOMER_REQUEST
+          description: Why the account is being closed.
     Error:
       type: object
       required: [code, message]

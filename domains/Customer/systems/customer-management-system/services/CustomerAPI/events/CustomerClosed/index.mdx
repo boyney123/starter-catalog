@@ -1,0 +1,38 @@
+---
+id: customer-closed
+name: Customer Closed
+version: 1.0.0
+summary: |
+  Published when a customer closes their account.
+owners:
+  - customer-platform
+badges:
+  - content: 'Broker:Kafka'
+    backgroundColor: blue
+    textColor: blue
+    icon: BoltIcon
+schemaPath: schema.json
+---
+
+import Footer from '@catalog/components/footer.astro';
+
+## Overview
+
+`CustomerClosed` is published by the [[service|customer-api]] when a customer's account is closed. The closure is idempotent — closing an already-closed account does nothing and no second event is emitted.
+
+Consumers of this event can use it to react to account closures, for example by anonymising customer data, cancelling active subscriptions, or releasing reserved resources.
+
+| Field | Description |
+|-------|-------------|
+| `eventId` | Unique identifier (UUID v4) for this event instance. |
+| `occurredAt` | ISO 8601 timestamp of when the account was closed. |
+| `customerId` | UUID of the customer whose account was closed. |
+| `reason` | Why the account was closed: `CUSTOMER_REQUEST`, `FRAUD`, or `INACTIVITY`. |
+
+<SchemaViewer file="schema.json" title="JSON Schema" maxHeight="500" />
+
+## Architecture diagram
+
+<NodeGraph />
+
+<Footer />
