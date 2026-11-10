@@ -23,11 +23,6 @@
           "type": "string",
           "format": "uuid"
         },
-        "email": {
-          "description": "Customer's email address",
-          "type": "string",
-          "format": "email"
-        },
         "name": {
           "description": "Customer's full name",
           "type": "string"
@@ -38,7 +33,7 @@
           "enum": ["ACTIVE", "SUSPENDED", "CLOSED"]
         }
       },
-      "required": ["customerId", "email", "status"]
+      "required": ["customerId", "status"]
     }
   },
   "required": ["eventId", "occurredAt", "customer"]
