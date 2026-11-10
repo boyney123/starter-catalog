@@ -3,7 +3,7 @@ id: product-search-publisher
 version: 1.0.0
 name: Product Search Publisher
 summary: |
-  Reads product changes from the product database (outbox) and reliably publishes product-created, product-updated and product-deleted events for the Search System to consume.
+  Reads product changes from the product database (outbox) and reliably publishes product-created and product-deleted events for the Search System to consume.
 styles:
   icon: /icons/languages/go.svg
 owners:
@@ -12,8 +12,6 @@ readsFrom:
   - id: product-database
 sends:
   - id: product-created
-    version: 1.0.0
-  - id: product-updated
     version: 1.0.0
   - id: product-deleted
     version: 1.0.0
@@ -26,9 +24,11 @@ import Footer from '@catalog/components/footer.astro';
 
 ## Overview
 
-The **Product Search Publisher** is the bridge between the Product Catalog System and the rest of the business. It uses the [transactional outbox pattern](https://microservices.io/patterns/data/transactional-outbox.html): the [[service|product-api]] records every product change in the [[container|product-database]], and this service reliably reads those changes and publishes them as [[event|product-created]], [[event|product-updated]] and [[event|product-deleted]] events.
+The **Product Search Publisher** is the bridge between the Product Catalog System and the rest of the business. It uses the [transactional outbox pattern](https://microservices.io/patterns/data/transactional-outbox.html): the [[service|product-api]] records product creates and deletes in the [[container|product-database]], and this service reliably reads those changes and publishes them as [[event|product-created]] and [[event|product-deleted]] events.
 
-This guarantees that product changes are never lost and are delivered to the [[system|search-system]] in order.
+> **Note:** Product updates are now published directly by the [[service|product-api]] to Kafka and are no longer relayed through this service.
+
+This guarantees that product creates and deletes are never lost and are delivered to the [[system|search-system]] in order.
 
 <Tiles>
   <Tile icon="BoltIcon" href={`/visualiser/services/${frontmatter.id}/${frontmatter.version}`} title={`Sends ${frontmatter.sends.length} messages`} description="Product change events published for downstream systems" />
@@ -38,8 +38,8 @@ This guarantees that product changes are never lost and are delivered to the [[s
 
 | Area | Description |
 |------|-------------|
-| Outbox polling | Reads unpublished product changes from the [[container\|product-database]]. |
-| Reliable publishing | Publishes [[event\|product-created]], [[event\|product-updated]] and [[event\|product-deleted]] with at-least-once delivery. |
+| Outbox polling | Reads unpublished product creates and deletes from the [[container\|product-database]]. |
+| Reliable publishing | Publishes [[event\|product-created]] and [[event\|product-deleted]] with at-least-once delivery. |
 | Ordering | Preserves per-product ordering of change events. |
 
 ## Architecture diagram
